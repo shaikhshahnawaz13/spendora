@@ -78,6 +78,7 @@ const I = {
   LogOut:     () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>,
   User:       () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
   Trash:      () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>,
+  Download:   () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>,
 };
 
 /* ─── CONSTANTS ──────────────────────────────────────────────────────────── */
@@ -99,6 +100,77 @@ const fmtK    = n => n >= 100000 ? `${(n/100000).toFixed(2)}L` : n >= 1000 ? `${
 const fmtDate = iso => new Date(iso).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "2-digit" });
 const fmtMon  = iso => new Date(iso).toLocaleDateString("en-IN", { month: "short", year: "2-digit" });
 const todayISO = () => new Date().toISOString().slice(0, 10);
+
+/* ─── DOWNLOAD HELPERS ───────────────────────────────────────────────────── */
+function downloadCSV(transactions, month) {
+  const rows = [["Date","Type","Category","Amount","Note"]];
+  transactions.forEach(t => {
+    rows.push([
+      new Date(t.date).toLocaleDateString("en-IN"),
+      t.type, t.category,
+      t.amount,
+      t.note || ""
+    ]);
+  });
+  const csv = rows.map(r => r.map(v => `"${v}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `spendora-${month || "export"}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function downloadPDF(transactions, monthlyData, month) {
+  const inc = transactions.filter(t => t.type === "income").reduce((s,t) => s+t.amount, 0);
+  const exp = transactions.filter(t => t.type === "expense").reduce((s,t) => s+t.amount, 0);
+  const savings = inc - exp;
+  const catMap = {};
+  transactions.filter(t => t.type === "expense").forEach(t => { catMap[t.category] = (catMap[t.category]||0) + t.amount; });
+
+  const html = `
+    <html><head><style>
+      body { font-family: 'Courier New', monospace; background: #fff; color: #111; padding: 32px; font-size: 12px; }
+      h1 { font-size: 22px; margin-bottom: 4px; }
+      h2 { font-size: 14px; margin: 20px 0 8px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+      table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+      th { background: #f0f0f0; padding: 6px 8px; text-align: left; font-size: 11px; }
+      td { padding: 5px 8px; border-bottom: 1px solid #eee; font-size: 11px; }
+      .inc { color: #16a34a; font-weight: bold; }
+      .exp { color: #dc2626; font-weight: bold; }
+      .summary { display: flex; gap: 24px; margin: 12px 0; }
+      .card { background: #f9f9f9; padding: 12px 20px; border: 1px solid #ddd; }
+      .card-label { font-size: 10px; color: #666; margin-bottom: 4px; }
+      .card-value { font-size: 18px; font-weight: bold; }
+    </style></head><body>
+      <h1>SPENDORA — MONTHLY REPORT</h1>
+      <p style="color:#666">${month || new Date().toLocaleDateString("en-IN",{month:"long",year:"numeric"})}</p>
+      <div class="summary">
+        <div class="card"><div class="card-label">TOTAL INCOME</div><div class="card-value inc">₹${fmtINR(inc)}</div></div>
+        <div class="card"><div class="card-label">TOTAL EXPENSES</div><div class="card-value exp">₹${fmtINR(exp)}</div></div>
+        <div class="card"><div class="card-label">NET SAVINGS</div><div class="card-value" style="color:${savings>=0?'#16a34a':'#dc2626'}">₹${fmtINR(savings)}</div></div>
+      </div>
+      <h2>EXPENSE BREAKDOWN</h2>
+      <table><thead><tr><th>CATEGORY</th><th>AMOUNT</th><th>% OF EXPENSES</th></tr></thead><tbody>
+        ${Object.entries(catMap).sort((a,b)=>b[1]-a[1]).map(([cat,amt]) =>
+          `<tr><td>${cat}</td><td>₹${fmtINR(amt)}</td><td>${exp ? (amt/exp*100).toFixed(1) : 0}%</td></tr>`
+        ).join("")}
+      </tbody></table>
+      <h2>ALL TRANSACTIONS</h2>
+      <table><thead><tr><th>DATE</th><th>TYPE</th><th>CATEGORY</th><th>AMOUNT</th><th>NOTE</th></tr></thead><tbody>
+        ${transactions.map(t =>
+          `<tr><td>${new Date(t.date).toLocaleDateString("en-IN")}</td><td class="${t.type==="income"?"inc":"exp"}">${t.type.toUpperCase()}</td><td>${t.category}</td><td class="${t.type==="income"?"inc":"exp"}">₹${fmtINR(t.amount)}</td><td>${t.note||"-"}</td></tr>`
+        ).join("")}
+      </tbody></table>
+    </body></html>
+  `;
+  const blob = new Blob([html], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const win = window.open(url, "_blank");
+  if (win) setTimeout(() => { win.print(); }, 600);
+  URL.revokeObjectURL(url);
+}
 
 /* ─── SHARED STYLES ──────────────────────────────────────────────────────── */
 const skelStyle = { background: C.dim, borderRadius: "2px", animation: "pulse 1.5s ease-in-out infinite" };
@@ -281,27 +353,42 @@ function AddModal({ onAdd, onClose }) {
 
 /* ─── AUTH SCREEN ────────────────────────────────────────────────────────── */
 function AuthScreen({ onAuth }) {
-  const [mode, setMode] = useState("login"); // login | signup
+  const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [avatar, setAvatar] = useState(null); // base64 string
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [sdkReady, setSdkReady] = useState(false);
+  const fileRef = useRef(null);
 
   useEffect(() => {
     loadSupabaseScript().then(() => setSdkReady(true)).catch(() => setError("FAILED TO LOAD AUTH SDK"));
   }, []);
 
+  const handleAvatar = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setAvatar(reader.result);
+    reader.readAsDataURL(file);
+  };
+
   const handleEmail = async () => {
     if (!sdkReady) { setError("AUTH SDK STILL LOADING, PLEASE WAIT"); return; }
     if (!email || !password) { setError("EMAIL AND PASSWORD ARE REQUIRED"); return; }
     if (password.length < 6) { setError("PASSWORD MUST BE AT LEAST 6 CHARACTERS"); return; }
+    if (mode === "signup" && !displayName.trim()) { setError("DISPLAY NAME IS REQUIRED"); return; }
     setLoading(true); setError(""); setSuccess("");
     try {
       let result;
       if (mode === "signup") {
-        result = await getClient().auth.signUp({ email, password });
+        result = await getClient().auth.signUp({
+          email, password,
+          options: { data: { full_name: displayName.trim(), avatar_url: avatar || "" } }
+        });
         if (result.error) throw result.error;
         if (result.data?.user && !result.data.session) {
           setSuccess("CHECK YOUR EMAIL TO CONFIRM YOUR ACCOUNT");
@@ -315,25 +402,6 @@ function AuthScreen({ onAuth }) {
     } catch (e) {
       setError(e.message?.toUpperCase() || "AUTH FAILED — TRY AGAIN");
     } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGoogle = async () => {
-    if (!sdkReady) { setError("AUTH SDK STILL LOADING, PLEASE WAIT"); return; }
-    setLoading(true); setError("");
-    try {
-      const { error } = await getClient().auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: "https://shaikhshahnawaz13.github.io/spendora/",
-          queryParams: { access_type: "offline", prompt: "consent" },
-          skipBrowserRedirect: false,
-        },
-      });
-      if (error) throw error;
-    } catch (e) {
-      setError((e.message || "GOOGLE SIGN-IN FAILED").toUpperCase());
       setLoading(false);
     }
   };
@@ -388,23 +456,42 @@ function AuthScreen({ onAuth }) {
           </div>
 
           <div style={{ padding: "24px 20px", display: "flex", flexDirection: "column", gap: "14px" }}>
-            {/* Google */}
-            <button onClick={handleGoogle} disabled={loading} style={{
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
-              fontFamily: FONT, fontSize: "10px", letterSpacing: "0.1em", padding: "10px",
-              background: C.bg, border: `1px solid ${C.border2}`, color: C.bright,
-              cursor: loading ? "not-allowed" : "pointer", borderRadius: "2px",
-              transition: "border-color 0.15s", opacity: loading ? 0.6 : 1,
-            }}>
-              <I.Google /> CONTINUE WITH GOOGLE
-            </button>
 
-            {/* Divider */}
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <div style={{ flex: 1, height: "1px", background: C.border }} />
-              <span style={{ fontFamily: FONT, fontSize: "9px", color: C.muted, letterSpacing: "0.12em" }}>OR</span>
-              <div style={{ flex: 1, height: "1px", background: C.border }} />
-            </div>
+            {/* Avatar upload — signup only */}
+            {mode === "signup" && (
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
+                <div
+                  onClick={() => fileRef.current?.click()}
+                  style={{
+                    width: "72px", height: "72px", borderRadius: "50%",
+                    border: `2px dashed ${C.border2}`, cursor: "pointer",
+                    overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center",
+                    background: C.bg, transition: "border-color 0.15s",
+                  }}
+                >
+                  {avatar
+                    ? <img src={avatar} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    : <span style={{ fontFamily: FONT, fontSize: "9px", color: C.muted, textAlign: "center", letterSpacing: "0.06em" }}>ADD<br/>PHOTO</span>
+                  }
+                </div>
+                <span style={{ fontFamily: FONT, fontSize: "9px", color: C.muted, letterSpacing: "0.08em" }}>PROFILE PHOTO (OPTIONAL)</span>
+                <input ref={fileRef} type="file" accept="image/*" onChange={handleAvatar} style={{ display: "none" }} />
+              </div>
+            )}
+
+            {/* Display name — signup only */}
+            {mode === "signup" && (
+              <div>
+                <label style={lbl}>DISPLAY NAME <span style={{ color: C.redLt }}>*</span></label>
+                <input
+                  value={displayName}
+                  onChange={e => setDisplayName(e.target.value)}
+                  placeholder="e.g. Shahnawaz"
+                  style={inp}
+                  onKeyDown={e => e.key === "Enter" && handleEmail()}
+                />
+              </div>
+            )}
 
             <div>
               <label style={lbl}>EMAIL</label>
@@ -562,19 +649,12 @@ export default function Spendora() {
     loadSupabaseScript().then(() => {
       const sb = getClient();
       if (!sb) { setAuthLoading(false); return; }
-
-      // Handle OAuth callback — exchange code for session
       sb.auth.getSession().then(({ data: { session } }) => {
         setUser(session?.user ?? null);
         setAuthLoading(false);
       });
-
-      const { data } = sb.auth.onAuthStateChange((event, session) => {
-        if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
-          setUser(session?.user ?? null);
-        } else if (event === "SIGNED_OUT") {
-          setUser(null);
-        }
+      const { data } = sb.auth.onAuthStateChange((_event, session) => {
+        setUser(session?.user ?? null);
         setAuthLoading(false);
       });
       sub = data.subscription;
@@ -733,6 +813,7 @@ export default function Spendora() {
   ];
 
   const userName = user?.user_metadata?.full_name || user?.email?.split("@")[0]?.toUpperCase() || "USER";
+  const userAvatar = user?.user_metadata?.avatar_url || null;
 
   /* ── LOADING ── */
   if (authLoading) {
@@ -867,7 +948,10 @@ create policy "Users own data" on transactions
         <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "0 12px", borderLeft: `1px solid ${C.border}`, flexShrink: 0 }}>
           {!isMobile && (
             <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <I.User />
+              {userAvatar
+                ? <img src={userAvatar} alt="avatar" style={{ width: "18px", height: "18px", borderRadius: "50%", objectFit: "cover", border: `1px solid ${C.border2}` }} />
+                : <I.User />
+              }
               <span style={{ fontFamily: FONT, fontSize: "9px", color: C.subtle, letterSpacing: "0.06em", maxWidth: "120px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{userName}</span>
             </div>
           )}
@@ -909,7 +993,7 @@ create policy "Users own data" on transactions
             <div style={{ flex: 1, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr", minHeight: isMobile ? "auto" : 0, borderBottom: `1px solid ${C.border}`, overflow: isMobile ? "visible" : "hidden" }}>
               {/* Area chart */}
               <div style={{ ...S.panel(), borderTop: "none", borderLeft: "none", borderBottom: isMobile ? `1px solid ${C.border}` : "none", height: isMobile ? "220px" : "auto" }}>
-                <PanelHeader title="CASHFLOW / 6M" tag="INCOME vs EXPENSE" />
+                <PanelHeader title="MONTHLY CASHFLOW" tag="INCOME vs EXPENSE" />
                 <div style={{ flex: 1, padding: "12px 6px 6px 0", minHeight: 0 }}>
                   {loading
                     ? <div style={{ ...S.skel, height: "100%", margin: "0 12px" }} />
@@ -1059,7 +1143,7 @@ create policy "Users own data" on transactions
                       animation: `fadeIn 0.2s ease ${Math.min(i, 12) * 0.015}s both`,
                       alignItems: "center",
                     }}
-                      onMouseEnter={e => e.currentTarget.style.background = C.dim}
+                        onMouseEnter={e => e.currentTarget.style.background = C.dim}
                       onMouseLeave={e => e.currentTarget.style.background = "transparent"}
                     >
                       {!isMobile && <span style={{ fontFamily: FONT, fontSize: "9px", color: C.subtle }}>{fmtDate(t.date)}</span>}
@@ -1181,7 +1265,24 @@ create policy "Users own data" on transactions
           <div style={{ flex: 1, display: isMobile ? "flex" : "grid", flexDirection: isMobile ? "column" : undefined, gridTemplateColumns: isMobile ? undefined : "1fr 1fr", overflow: isMobile ? "auto" : "hidden" }}>
             {/* Insight signals */}
             <div style={{ ...S.panel(), borderTop: "none", borderLeft: "none", borderBottom: isMobile ? `1px solid ${C.border}` : "none", borderRight: `1px solid ${C.border}` }}>
-              <PanelHeader title="FINANCIAL SIGNALS" tag={`${insights.length} ACTIVE`} />
+              <PanelHeader title="FINANCIAL SIGNALS" tag={`${insights.length} ACTIVE`} right={
+                <div style={{ display: "flex", gap: "6px" }}>
+                  <button onClick={() => {
+                    const now = new Date();
+                    const mo = transactions.filter(t => { const d = new Date(t.date); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); });
+                    downloadCSV(mo, now.toLocaleDateString("en-IN",{month:"short",year:"2-digit"}));
+                  }} style={{ fontFamily: FONT, fontSize: "9px", color: C.greenLt, background: `${C.green}18`, border: `1px solid ${C.green}44`, cursor: "pointer", padding: "4px 8px", borderRadius: "2px", display: "flex", alignItems: "center", gap: "4px", letterSpacing: "0.08em" }}>
+                    <I.Download /> EXCEL
+                  </button>
+                  <button onClick={() => {
+                    const now = new Date();
+                    const mo = transactions.filter(t => { const d = new Date(t.date); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); });
+                    downloadPDF(mo, monthlyData, now.toLocaleDateString("en-IN",{month:"long",year:"numeric"}));
+                  }} style={{ fontFamily: FONT, fontSize: "9px", color: C.redLt, background: `${C.red}18`, border: `1px solid ${C.red}44`, cursor: "pointer", padding: "4px 8px", borderRadius: "2px", display: "flex", alignItems: "center", gap: "4px", letterSpacing: "0.08em" }}>
+                    <I.Download /> PDF
+                  </button>
+                </div>
+              } />
               <div style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
                 {loading
                   ? Array(4).fill(0).map((_, i) => <div key={i} style={{ ...S.skel, height: "60px", margin: "6px 14px" }} />)
