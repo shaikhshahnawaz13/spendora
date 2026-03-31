@@ -323,15 +323,12 @@ function AuthScreen({ onAuth }) {
     if (!sdkReady) { setError("AUTH SDK STILL LOADING, PLEASE WAIT"); return; }
     setLoading(true); setError("");
     try {
-      // redirectTo must match an allowed redirect URL in your Supabase dashboard
-      // Go to: Supabase → Authentication → URL Configuration → Redirect URLs
-      // Add your site URL there (e.g. https://yourusername.github.io/spendora/)
-      const redirectTo = window.location.origin + window.location.pathname;
       const { error } = await getClient().auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo,
+          redirectTo: "https://shaikhshahnawaz13.github.io/spendora/",
           queryParams: { access_type: "offline", prompt: "consent" },
+          skipBrowserRedirect: false,
         },
       });
       if (error) throw error;
@@ -565,12 +562,19 @@ export default function Spendora() {
     loadSupabaseScript().then(() => {
       const sb = getClient();
       if (!sb) { setAuthLoading(false); return; }
+
+      // Handle OAuth callback — exchange code for session
       sb.auth.getSession().then(({ data: { session } }) => {
         setUser(session?.user ?? null);
         setAuthLoading(false);
       });
-      const { data } = sb.auth.onAuthStateChange((_event, session) => {
-        setUser(session?.user ?? null);
+
+      const { data } = sb.auth.onAuthStateChange((event, session) => {
+        if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+          setUser(session?.user ?? null);
+        } else if (event === "SIGNED_OUT") {
+          setUser(null);
+        }
         setAuthLoading(false);
       });
       sub = data.subscription;
