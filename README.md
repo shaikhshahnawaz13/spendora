@@ -1,194 +1,186 @@
-
-````md
 <div align="center">
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,35:1D4ED8,70:3B82F6,100:60A5FA&height=280&section=header&text=Spendora&fontSize=90&fontColor=FFFFFF&fontAlignY=35&desc=Modern%20Expense%20Tracker%20%7C%20Budget%20Manager%20%7C%20Finance%20Dashboard&descAlignY=58&descSize=22&descColor=DBEAFE&animation=fadeIn" />
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:050608,35:1a0f00,70:78350f,100:d97706&height=280&section=header&text=Spendora&fontSize=90&fontColor=FFFFFF&fontAlignY=35&desc=Personal%20Finance%20Dashboard%20%7C%20Powered%20by%20Supabase%20%2B%20React&descAlignY=58&descSize=20&descColor=fcd34d&animation=fadeIn" />
 
 <br/>
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Poppins&weight=700&size=30&duration=2500&pause=1000&color=60A5FA&center=true&vCenter=true&width=1000&lines=Track+every+expense.;Visualize+your+financial+habits.;Manage+budgets+beautifully.;Analyze+where+your+money+goes.;Spend+smarter+with+Spendora.)](https://shaikhshahnawaz13.github.io/spendora/)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=IBM+Plex+Mono&weight=700&size=22&duration=2500&pause=1000&color=D97706&center=true&vCenter=true&width=900&lines=Track+income.+Monitor+expenses.;Visualize+your+financial+habits.;Export+reports+as+CSV+or+PDF.;Backed+by+Supabase.+Secured+with+Google.)](https://shaikhshahnawaz13.github.io/spendora/)
 
 <br/><br/>
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Now-2563EB?style=for-the-badge&logo=githubpages&logoColor=white)](https://shaikhshahnawaz13.github.io/spendora/)
-[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-0F172A?style=for-the-badge&logo=github&logoColor=white)](https://github.com/shaikhshahnawaz13/spendora)
-[![Stars](https://img.shields.io/github/stars/shaikhshahnawaz13/spendora?style=for-the-badge&color=3B82F6&logo=github)](https://github.com/shaikhshahnawaz13/spendora)
-[![Forks](https://img.shields.io/github/forks/shaikhshahnawaz13/spendora?style=for-the-badge&color=2563EB&logo=github)](https://github.com/shaikhshahnawaz13/spendora)
-[![Issues](https://img.shields.io/github/issues/shaikhshahnawaz13/spendora?style=for-the-badge&color=60A5FA)](https://github.com/shaikhshahnawaz13/spendora/issues)
-[![License](https://img.shields.io/badge/License-MIT-93C5FD?style=for-the-badge)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Now-d97706?style=for-the-badge&logo=githubpages&logoColor=white)](https://shaikhshahnawaz13.github.io/spendora/)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-050608?style=for-the-badge&logo=github&logoColor=white)](https://github.com/shaikhshahnawaz13/spendora)
+[![Stars](https://img.shields.io/github/stars/shaikhshahnawaz13/spendora?style=for-the-badge&color=d97706&logo=github)](https://github.com/shaikhshahnawaz13/spendora)
+[![Issues](https://img.shields.io/github/issues/shaikhshahnawaz13/spendora?style=for-the-badge&color=f59e0b)](https://github.com/shaikhshahnawaz13/spendora/issues)
+[![License](https://img.shields.io/badge/License-MIT-fcd34d?style=for-the-badge)](LICENSE)
 
 <br/><br/>
 
 [![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=flat-square&logo=supabase&logoColor=white)](https://supabase.com/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38BDF8?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Recharts](https://img.shields.io/badge/Recharts-Analytics-22C55E?style=flat-square)](https://recharts.org/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 <br/><br/>
 
-> *"Spendora is not just another expense tracker. It is a visual finance dashboard built to help users understand spending, improve budgeting, and make smarter financial decisions."*
+> *Spendora is a terminal-aesthetic personal finance dashboard. It tracks your income and expenses in real time, surfaces financial insights, and exports clean reports — all backed by a live Supabase database.*
 
 </div>
 
 ---
 
-# 📖 Table of Contents
+## Table of Contents
 
-- Overview
-- Why Spendora Exists
-- Key Features
-- Dashboard Preview
-- Tech Stack
-- Folder Structure
-- Installation
-- Running Locally
-- Deployment to GitHub Pages
-- How Spendora Works
-- State Management & Data Flow
-- Chart System
-- UI & Design Philosophy
-- Responsive Design
-- Future Roadmap
-- Contributing
-- License
+- [Overview](#overview)
+- [Key Features](#-key-features)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [How It Works](#-how-it-works)
+- [Charts & Analytics](#-charts--analytics)
+- [Financial Signals Engine](#-financial-signals-engine)
+- [Authentication](#-authentication)
+- [Export System](#-export-system)
+- [Installation](#-installation)
+- [Deployment](#-deployment)
+- [UI & Design Philosophy](#-ui--design-philosophy)
+- [Future Roadmap](#-future-roadmap)
+- [License](#-license)
 
 ---
 
-# Overview
+## Overview
 
-Spendora is a modern personal finance dashboard built using React and Vite. The goal of the project is simple: help users understand their money in a clean, visual, and elegant way.
+Spendora is not just a list of expenses. It is a full financial intelligence dashboard that helps you understand where your money goes, how your spending compares across months, and what budget limits you are approaching.
 
-Most expense trackers only allow you to add numbers into a list. Spendora goes much further. Every transaction is converted into useful insights through charts, category breakdowns, progress bars, and monthly analytics.
+Every transaction you add is stored in a real Supabase database — not the browser's localStorage — so your data is synced, persistent, and accessible from any device.
 
-Instead of asking:
-
-> “How much money did I spend?”
-
-Spendora helps answer:
-
-- Where am I spending the most?
-- Which category is growing too quickly?
-- How much budget do I still have left?
-- How close am I to my savings goal?
-- What should I reduce next month?
+The interface is built around a monospace terminal aesthetic using IBM Plex Mono, with a dark theme and amber accent that makes critical financial numbers stand out at a glance.
 
 ---
 
-# Why Spendora Exists
-
-Managing money is difficult when all your transactions are hidden inside banking apps or random notes. Most people know they are spending too much, but they do not know exactly where.
-
-Spendora was created to solve this problem by turning financial data into something easy to understand.
-
-The project is designed for:
-
-- Students who want to track monthly allowance
-- Freelancers who want to manage personal spending
-- Professionals who want budget awareness
-- Anyone who wants a beautiful and simple finance dashboard
-
----
-
-# ✨ Key Features
+## ✨ Key Features
 
 | Feature | Description |
-|---------|-------------|
-| Expense Tracking | Add, edit, and remove expenses instantly |
-| Category Management | Group expenses into categories like Food, Shopping, Bills, Travel, Entertainment |
-| Budget Tracking | Set monthly limits and compare them against actual expenses |
-| Live Analytics | Charts update automatically whenever data changes |
-| Savings Insights | Shows how much money is left after expenses |
-| Modern Dashboard | Clean layout with cards, charts, and quick summaries |
-| Local Storage | Saves your data in the browser so nothing is lost |
-| Responsive UI | Works beautifully on mobile, tablet, and desktop |
-| Fast Loading | Powered by Vite for near-instant startup |
-| Beautiful Animations | Smooth transitions, hover effects, and elegant card interactions |
+|---|---|
+| **Expense & Income Tracking** | Add, view, and delete transactions categorized into 8 expense and 5 income types |
+| **Supabase Backend** | All transactions stored in a live PostgreSQL database via Supabase |
+| **Google OAuth** | Secure sign-in with Google — no passwords required |
+| **Budget Tracking** | Preset monthly budgets per category with live progress tracking |
+| **Financial Signals** | Auto-generated insights based on your spending patterns |
+| **Multi-Chart Analytics** | Area, Bar, and Line charts for income vs. expense over time |
+| **Period Summary Table** | Month-by-month breakdown of income, expenses, and savings rate |
+| **CSV Export** | Download current month's transactions as a spreadsheet |
+| **PDF Report** | Export a formatted monthly financial report as a PDF |
+| **Mobile Responsive** | Sidebar drawer navigation on mobile, full dashboard on desktop |
+| **Status Bar** | Live system status, DB connection, row count, and active view |
 
 ---
 
-# 🖥 Dashboard Preview
+## 🛠 Tech Stack
 
-```text
-┌───────────────────────────────────────────────────────────────┐
-│                         SPENDORA                             │
-├───────────────────────────────────────────────────────────────┤
-│ Total Balance          ₹24,500                              │
-│ Monthly Budget         ₹15,000                              │
-│ Total Expenses         ₹10,500                              │
-│ Savings                ₹14,000                              │
-├───────────────────────────────────────────────────────────────┤
-│ Category Breakdown                                         │
-│                                                           │
-│ Food            ████████       ₹3,200                     │
-│ Shopping        █████          ₹2,100                     │
-│ Bills           ██████         ₹2,800                     │
-│ Travel          ████           ₹1,500                     │
-│ Entertainment   ██             ₹900                       │
-│                                                           │
-├───────────────────────────────────────────────────────────────┤
-│ [ Pie Chart ]      [ Bar Chart ]      [ Budget Progress ]  │
-└───────────────────────────────────────────────────────────────┘
-````
+| Layer | Technology | Purpose |
+|---|---|---|
+| Frontend | React 18 | Component-based UI with hooks |
+| Build Tool | Vite | Fast dev server and optimized production builds |
+| Backend / DB | Supabase | PostgreSQL database + real-time data sync |
+| Auth | Supabase Auth + Google OAuth | Secure user authentication |
+| Charts | Recharts | Area, Bar, and Line chart components |
+| Styling | Inline styles + IBM Plex Mono | Terminal-aesthetic design system |
+| Export | Custom CSV + PDF generators | Client-side report generation |
+| Deployment | GitHub Pages | Free static hosting |
 
 ---
 
-# 🛠 Tech Stack
+## 📁 Project Structure
 
-| Layer        | Technology   | Why It Was Chosen                                |
-| ------------ | ------------ | ------------------------------------------------ |
-| Frontend     | React        | Component-based architecture and reusable UI     |
-| Build Tool   | Vite         | Fast development and optimized production builds |
-| Styling      | TailwindCSS  | Utility-first styling with rapid development     |
-| Charts       | Recharts     | Beautiful and responsive chart components        |
-| Data Storage | localStorage | Saves user data without needing a backend        |
-| Deployment   | GitHub Pages | Free and easy deployment                         |
-
----
-
-# 📁 Folder Structure
-
-```bash
+```
 spendora/
 ├── public/
 │   └── favicon.ico
 │
 ├── src/
-│   ├── assets/
-│   │   ├── logo.png
-│   │   └── icons/
-│   │
-│   ├── components/
-│   │   ├── Navbar.jsx
-│   │   ├── Sidebar.jsx
-│   │   ├── DashboardCard.jsx
-│   │   ├── ExpenseForm.jsx
-│   │   ├── ExpenseList.jsx
-│   │   ├── BudgetProgress.jsx
-│   │   ├── PieChartComponent.jsx
-│   │   └── BarChartComponent.jsx
-│   │
-│   ├── pages/
-│   │   ├── Dashboard.jsx
-│   │   ├── Expenses.jsx
-│   │   └── Analytics.jsx
-│   │
-│   ├── utils/
-│   │   ├── calculateTotals.js
-│   │   └── formatCurrency.js
-│   │
-│   ├── App.jsx
+│   ├── App.jsx          ← Entire application (single-file architecture)
 │   └── main.jsx
 │
+├── index.html
 ├── package.json
 ├── vite.config.js
-├── README.md
+├── eslint.config.js
 └── .gitignore
+```
+
+> Spendora uses a single-file architecture where all components, logic, constants, and styles live in `App.jsx`. This keeps the codebase easy to navigate for a project of this scope.
+
+---
+
+## ⚙️ How It Works
+
+```
+User signs in via Google OAuth
+          ↓
+Supabase Auth issues session
+          ↓
+Transactions fetched from Supabase DB
+          ↓
+React state populated → Charts render
+          ↓
+User adds/deletes transaction
+          ↓
+Supabase DB updated → UI re-renders
+          ↓
+Financial signals recalculated automatically
 ```
 
 ---
 
-# 🚀 Installation
+## 📊 Charts & Analytics
+
+Spendora uses three Recharts chart types to visualize financial data:
+
+**Area Chart** — Stacked income vs. expense over rolling months. Shows trends at a glance.
+
+**Bar Chart** — Side-by-side income and expense bars per month. Best for comparing period performance.
+
+**Line Chart** — Net savings line over time. Reveals whether your financial health is improving or declining.
+
+All charts update in real time whenever transactions are added or removed. The Y-axis uses a compact INR formatter (e.g., `14K`, `1.2L`) to keep the dashboard readable.
+
+---
+
+## 🔍 Financial Signals Engine
+
+Spendora automatically generates contextual financial insights from your transaction data. Examples include:
+
+- Budget warnings when a category approaches or exceeds its monthly limit
+- Savings rate signals when the ratio falls below healthy thresholds
+- Income vs. expense imbalance detection
+- Month-over-month spending trend alerts
+
+These signals appear in the **Financial Signals** panel and refresh whenever data changes.
+
+---
+
+## 🔐 Authentication
+
+Spendora uses **Supabase Auth with Google OAuth**. Users sign in with their Google account — no email/password setup required.
+
+On sign-in, Supabase issues a session tied to the user's ID. All transactions are scoped per user, so each account sees only its own data.
+
+---
+
+## 📤 Export System
+
+**CSV Export** — Generates a `Date, Type, Category, Amount, Note` spreadsheet for the current month and triggers a browser download.
+
+**PDF Export** — Builds a formatted financial report using the browser's print API, including the monthly summary table and chart data.
+
+Both exports are client-side — no server required.
+
+---
+
+## 🚀 Installation
 
 ```bash
 git clone https://github.com/shaikhshahnawaz13/spendora.git
@@ -197,22 +189,21 @@ npm install
 npm run dev
 ```
 
-After starting the development server, open:
+Open in browser:
 
-```text
+```
 http://localhost:5173
 ```
 
 ---
 
-# 🌐 Deployment to GitHub Pages
+## 🌐 Deployment
+
+The project is deployed to GitHub Pages using `gh-pages`.
 
 Inside `vite.config.js`:
 
 ```js
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
 export default defineConfig({
   plugins: [react()],
   base: '/spendora/',
@@ -223,9 +214,6 @@ Inside `package.json`:
 
 ```json
 "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview",
   "predeploy": "npm run build",
   "deploy": "gh-pages -d dist"
 }
@@ -239,117 +227,32 @@ npm run deploy
 
 ---
 
-# ⚙️ How Spendora Works
+## 🎨 UI & Design Philosophy
 
-The flow inside Spendora is simple:
+Spendora is built around a **terminal / financial terminal aesthetic**:
 
-1. User enters an expense
-2. Expense is saved into application state
-3. The state is stored in localStorage
-4. Charts and cards update instantly
-5. Budget progress recalculates automatically
-
-```text
-User Adds Expense
-        ↓
-Expense Saved in React State
-        ↓
-Stored in localStorage
-        ↓
-Dashboard Cards Update
-        ↓
-Charts Re-render Automatically
-```
+- **Font**: IBM Plex Mono — every label, number, and tag uses monospace for a data-dense, precise feel
+- **Color palette**: Near-black backgrounds (`#050608`) with amber (`#d97706`, `#f59e0b`) as the primary accent
+- **Data density**: Small font sizes, uppercase labels, letter spacing — information packed without clutter
+- **Status bar**: Persistent bottom bar showing active user, DB status, row count, and system health — inspired by IDE status bars
+- **Skeleton loaders**: Panels render shimmer placeholders while data fetches, avoiding layout shifts
 
 ---
 
-# 📊 Chart System
+## 🛣 Future Roadmap
 
-Spendora uses Recharts to display spending visually.
-
-### Pie Chart
-
-Used to show how expenses are divided across categories.
-
-Example:
-
-* Food → 30%
-* Bills → 25%
-* Shopping → 20%
-* Travel → 15%
-* Entertainment → 10%
-
-### Bar Chart
-
-Used to compare spending between different months.
-
-### Progress Bar
-
-Used to display how much of the budget has already been used.
+- [ ] Recurring transactions support
+- [ ] Custom budget limits per user (currently preset)
+- [ ] Dark / Light theme toggle
+- [ ] AI-powered spending suggestions
+- [ ] Bank statement import (CSV parsing)
+- [ ] Notification alerts when budgets are exceeded
+- [ ] Search and filter transactions
+- [ ] Multi-currency support
 
 ---
 
-# 🎨 UI & Design Philosophy
-
-Spendora follows the same modern, minimal, black-and-blue style that you usually use in your portfolio and other projects.
-
-Design goals:
-
-* Clean and uncluttered layout
-* Smooth animations and transitions
-* Strong typography
-* Dark premium look with blue highlights
-* Cards with soft shadows and rounded corners
-* Visual hierarchy so the most important numbers stand out instantly
-
----
-
-# 📱 Responsive Design
-
-Spendora is fully responsive.
-
-| Device  | Experience                              |
-| ------- | --------------------------------------- |
-| Desktop | Full dashboard with side-by-side charts |
-| Tablet  | Cards stack with medium-sized charts    |
-| Mobile  | Simplified layout optimized for touch   |
-
----
-
-# 🛣 Future Roadmap
-
-* [ ] User authentication
-* [ ] Cloud sync with database
-* [ ] Export data as CSV or PDF
-* [ ] AI-powered spending suggestions
-* [ ] Recurring expenses system
-* [ ] Dark / Light theme switcher
-* [ ] Bank account integration
-* [ ] Notifications and reminders
-* [ ] Search and filter transactions
-
----
-
-# 🤝 Contributing
-
-```bash
-git clone https://github.com/YOUR_USERNAME/spendora.git
-cd spendora
-
-git checkout -b feature/amazing-feature
-
-# Make changes
-# Commit changes
-
-git commit -m "feat: add amazing feature"
-git push origin feature/amazing-feature
-```
-
-Then create a Pull Request.
-
----
-
-# 📜 License
+## 📜 License
 
 This project is licensed under the MIT License.
 
@@ -357,17 +260,11 @@ This project is licensed under the MIT License.
 
 <div align="center">
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,35:1D4ED8,70:3B82F6,100:60A5FA&height=180&section=footer" />
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:d97706,50:78350f,100:050608&height=140&section=footer" />
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Poppins\&weight=700\&size=24\&pause=1000\&color=93C5FD\&center=true\&vCenter=true\&width=850\&lines=Thank+you+for+using+Spendora!;Track+smart.+Spend+better.+Save+more.)](https://github.com/shaikhshahnawaz13/spendora)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=IBM+Plex+Mono&weight=600&size=16&pause=1000&color=D97706&center=true&vCenter=true&width=600&lines=Built+by+Shaikh+Shahnawaz+Ahmed;Track+smart.+Spend+better.+Save+more.)](https://github.com/shaikhshahnawaz13)
 
-<br/><br/>
+[![GitHub](https://img.shields.io/badge/GitHub-shaikhshahnawaz13-d97706?style=for-the-badge&logo=github&logoColor=white)](https://github.com/shaikhshahnawaz13)
 
-### Built with ❤️ by Shaikh Shahnawaz Ahmed
+⭐ If Spendora helped you, consider leaving a star.
 
-[![GitHub](https://img.shields.io/badge/GitHub-shaikhshahnawaz13-181717?style=for-the-badge\&logo=github\&logoColor=white)](https://github.com/shaikhshahnawaz13)
-
-⭐ If you like this project, leave a star on the repository.
-
-</div>
-```
