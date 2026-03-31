@@ -268,3 +268,4 @@ This project is licensed under the MIT License.
 
 ⭐ If Spendora helped you, consider leaving a star.
 
+</div>
